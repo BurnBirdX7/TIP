@@ -1,0 +1,11 @@
+main() {
+    // Test records with recursive types
+
+    var a;
+    var b;
+
+    a = {b: &b, v: 17};
+    b = {a: &a, v: 19};
+
+    return (*(*(a.b).a)).v;
+}
