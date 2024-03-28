@@ -1,0 +1,11 @@
+
+foo(p){
+    return foo;
+}
+
+bar(){
+    var a;
+    a = foo(10);
+    a = a(10);
+    return a;
+}

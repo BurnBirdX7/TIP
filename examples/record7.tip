@@ -1,0 +1,20 @@
+main() {
+    // Test Direct and inderect field write
+
+    var a;
+    var b;
+
+    var val;
+    var ptr_val;
+
+    a = {p:14,q:alloc null};
+    val = 17;
+
+    b = {ptr_a: &a};
+
+    ptr_val = &val;
+    a.q = &ptr_val;
+    (*b.ptr_a).p = 17;
+
+    return a.p;
+}
