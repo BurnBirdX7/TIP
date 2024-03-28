@@ -85,10 +85,20 @@ class SimpleSignAnalysis(cfg: ProgramCfg)(implicit declData: DeclarationData) ex
       case r: CfgStmtNode =>
         r.data match {
           // var declarations
-          case varr: AVarStmt => ??? //<--- Complete here
+          case varr: AVarStmt =>
+            s ++ varr.declIds.map{ id => (id, valuelattice.top) }.toMap
 
           // assignments
-          case AAssignStmt(id: AIdentifier, right, _) => ??? //<--- Complete here
+          case AAssignStmt(id: AIdentifier, right, _) =>
+            val decl = declaredVars.find {
+              case AIdentifierDeclaration(name, _) => name == id.name
+              case _ => false
+            }
+            if (decl.isDefined) {
+              s ++ Map(decl.get.asInstanceOf[AIdentifierDeclaration] -> eval(right, s))
+            } else {
+              s
+            }
 
           // all others: like no-ops
           case _ => s
